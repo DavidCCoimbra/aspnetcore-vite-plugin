@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>ASP.NET Core Vite</title>
+        <style>
+            *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+            html { line-height: 1.5; font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; }
+            body { min-height: 100vh; display: flex; align-items: center; justify-content: center; background-color: #f3f4f6; color: #4b5563; }
+            @media (prefers-color-scheme: dark) { body { background-color: #111827; color: #9ca3af; } .card { background-color: #1f2937; } h1 { color: #f3f4f6; } a { color: #818cf8; } a:hover { color: #a5b4fc; } .divider { border-color: #374151; } code { color: #f3f4f6; } }
+            .card { background: white; padding: 2.5rem; border-radius: 0.5rem; box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1); max-width: 36rem; width: 100%; }
+            .logos { display: flex; align-items: center; justify-content: center; gap: 1.5rem; margin-bottom: 2rem; }
+            .logos svg { height: 4rem; width: auto; }
+            .plus { color: #9ca3af; font-size: 1.5rem; }
+            h1 { font-size: 1.125rem; font-weight: 600; color: #111827; margin-bottom: 0.5rem; }
+            p { margin-top: 0.75rem; }
+            .divider { border-top: 1px solid #e5e7eb; margin: 1.5rem 0; }
+            a { color: #6366f1; font-weight: 600; text-decoration: none; }
+            a:hover { color: #4f46e5; }
+            code { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace; font-size: 0.875rem; font-weight: 700; color: #111827; }
+        </style>
+    </head>
+    <body>
+        <div class="card">
+            <div class="logos">
+                <!-- .NET logo -->
+                <svg viewBox="0 0 456 456" xmlns="http://www.w3.org/2000/svg">
+                    <rect width="456" height="456" rx="50" fill="#512BD4"/>
+                    <path d="M81.274 291.333c-3.249 0-5.937-.968-8.064-2.904-2.08-1.984-3.12-4.408-3.12-7.272 0-2.912 1.04-5.36 3.12-7.344 2.127-1.984 4.815-2.976 8.064-2.976 3.296 0 5.984.992 8.064 2.976 2.127 1.984 3.192 4.432 3.192 7.344 0 2.864-1.065 5.288-3.192 7.272-2.08 1.936-4.768 2.904-8.064 2.904zM200.082 289.333h-28.704l-66.096-102.768c-2.56-3.888-4.672-7.824-6.336-11.808h-.48c.672 4.56 1.008 13.368 1.008 26.424v88.152h-23.088v-139.44h30.528l63.84 100.56c4.176 6.576 6.864 11.136 8.064 13.68h.336c-.864-5.568-1.296-14.832-1.296-27.792v-86.448h23.232v139.44h-.008zM288.786 289.333h-76.896v-139.44h73.92v20.784h-49.728v39.168h46.08v20.64h-46.08v38.064h52.704v20.784zM380.466 170.517h-39.168v118.8h-24.192v-118.8h-39.024v-20.64h102.384v20.64z" fill="white"/>
+                </svg>
+                <span class="plus">+</span>
+                <!-- Vite logo -->
+                <svg viewBox="0 0 410 404" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M399.641 59.5246L215.643 388.545C211.844 395.338 202.084 395.378 198.228 388.618L10.5817 59.5563C6.38087 52.1896 12.6802 43.2665 21.0281 44.7586L205.223 77.6824C206.398 77.8924 207.601 77.8904 208.776 77.6763L389.119 44.8058C397.439 43.2894 403.768 52.1434 399.641 59.5246Z" fill="url(#paint0_linear)"/>
+                    <path d="M292.965 1.5744L156.801 28.2552C154.563 28.6937 152.906 30.5903 152.771 32.8664L144.395 174.33C144.198 177.662 147.258 180.248 150.51 179.498L188.42 170.749C191.967 169.931 195.172 173.055 194.443 176.622L183.18 231.775C182.422 235.487 185.907 238.661 189.532 237.56L212.947 230.446C216.577 229.344 220.065 232.527 219.297 236.242L201.398 322.875C200.278 328.294 207.486 331.249 210.492 326.603L212.5 323.5L323.454 102.072C325.312 98.3645 322.108 94.137 318.036 94.9228L279.014 102.454C275.347 103.161 272.227 99.746 273.262 96.1583L298.731 7.86689C299.767 4.27314 296.636 0.855181 292.965 1.5744Z" fill="url(#paint1_linear)"/>
+                    <defs>
+                        <linearGradient id="paint0_linear" x1="6.00017" y1="32.9999" x2="235" y2="344" gradientUnits="userSpaceOnUse">
+                            <stop stop-color="#41D1FF"/>
+                            <stop offset="1" stop-color="#BD34FE"/>
+                        </linearGradient>
+                        <linearGradient id="paint1_linear" x1="194.651" y1="8.81818" x2="236.076" y2="292.989" gradientUnits="userSpaceOnUse">
+                            <stop stop-color="#FFEA83"/>
+                            <stop offset="0.0833333" stop-color="#FFDD35"/>
+                            <stop offset="1" stop-color="#FFA800"/>
+                        </linearGradient>
+                    </defs>
+                </svg>
+            </div>
+            <div>
+                <p>This is the Vite development server providing Hot Module Replacement for your ASP.NET Core application.</p>
+                <p>To access your application, make sure your .NET server is running:</p>
+                <p style="margin-top: 1rem;"><code>dotnet run</code> or <code>dotnet watch</code></p>
+            </div>
+            <div class="divider"></div>
+            <div>
+                <p>For setup instructions and documentation:</p>
+                <p><a href="https://github.com/DavidCCoimbra/aspnetcore-vite-plugin">aspnetcore-vite-plugin &rarr;</a></p>
+            </div>
+        </div>
+    </body>
+</html>
