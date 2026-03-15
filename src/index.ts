@@ -126,19 +126,27 @@ function resolveDotnetPlugin(pluginConfig: Required<DotnetVitePluginConfig>): Do
             }
         },
         configureServer(server) {
+            const envDir = resolvedConfig?.envDir || process.cwd()
+
             server.httpServer?.once('listening', () => {
                 viteDevServerUrl = resolveListeningServerUrl(server, userConfig)
                 writeHotFile(pluginConfig.hotFile, viteDevServerUrl, server.config.base)
-                logServerStart(server)
+
+                const appUrl = resolveAppUrl(envDir, resolvedConfig?.mode ?? 'development')
+                logServerStart(server, appUrl)
             })
 
             bindExitHandlers(pluginConfig.hotFile)
 
             return () => server.middlewares.use((req, res, next) => {
                 if (req.url === '/index.html') {
+                    const envDir = resolvedConfig?.envDir || process.cwd()
+                    const appUrl = resolveAppUrl(envDir, resolvedConfig?.mode ?? 'development')
+
                     res.statusCode = 404
                     res.end(
                         fs.readFileSync(path.join(dirname(), 'dev-server-index.html')).toString()
+                            .replace(/\{\{ APP_URL \}\}/g, appUrl ?? 'http://localhost:5000')
                     )
                 }
                 next()
@@ -152,8 +160,8 @@ function resolveDotnetPlugin(pluginConfig: Required<DotnetVitePluginConfig>): Do
  */
 function resolveBuildConfig(pluginConfig: Required<DotnetVitePluginConfig>, userConfig: UserConfig, ssr: boolean) {
     return {
-        manifest: userConfig.build?.manifest ?? (ssr ? false : 'manifest.json'),
-        ssrManifest: userConfig.build?.ssrManifest ?? (ssr ? 'ssr-manifest.json' : false),
+        manifest: userConfig.build?.manifest ?? (ssr ? false : true),
+        ssrManifest: userConfig.build?.ssrManifest ?? (ssr ? true : false),
         outDir: userConfig.build?.outDir ?? resolveOutDir(pluginConfig, ssr),
         rollupOptions: {
             input: userConfig.build?.rollupOptions?.input ?? resolveInput(pluginConfig, ssr)
@@ -220,8 +228,9 @@ function resolveListeningServerUrl(server: import('vite').ViteDevServer, userCon
 
 /**
  * Write the hot file so the .NET server can discover the Vite dev server.
+ * @internal Exported for testing.
  */
-function writeHotFile(hotFile: string, devServerUrl: DevServerUrl, base: string): void {
+export function writeHotFile(hotFile: string, devServerUrl: DevServerUrl, base: string): void {
     const hotFileParentDirectory = path.dirname(hotFile)
 
     if (! fs.existsSync(hotFileParentDirectory)) {
@@ -236,19 +245,46 @@ function writeHotFile(hotFile: string, devServerUrl: DevServerUrl, base: string)
 }
 
 /**
+ * Resolve the .NET application URL from environment variables or .env file.
+ */
+function resolveAppUrl(envDir: string, mode: string): string | undefined {
+    const env = loadEnv(mode, envDir, '')
+
+    // Check APP_URL from .env first (explicit config)
+    if (env.APP_URL) {
+        return env.APP_URL
+    }
+
+    // Check ASPNETCORE_URLS (standard .NET env var)
+    if (process.env.ASPNETCORE_URLS) {
+        // ASPNETCORE_URLS can be semicolon-separated, take the first
+        return process.env.ASPNETCORE_URLS.split(';')[0]
+    }
+
+    return undefined
+}
+
+/**
  * Log the plugin banner on server start.
  */
-function logServerStart(server: import('vite').ViteDevServer): void {
+function logServerStart(server: import('vite').ViteDevServer, appUrl?: string): void {
     setTimeout(() => {
-        server.config.logger.info(`\n  ${colors.blue(`${colors.bold('ASP.NET Core')}`)}  ${colors.dim('plugin')} ${colors.bold(`v${pluginVersion()}`)}`)
-        server.config.logger.info('')
+        const log = server.config.logger
+        const net = (s: string) => `\x1b[38;2;204;110;212m${s}\x1b[0m`
+
+        if (appUrl) {
+            log.info('')
+            log.info(`  ${net('➜')}  ${net(colors.bold('App'))}:  ${colors.cyan(appUrl)}`)
+            log.info('')
+        }
     }, 100)
 }
 
 /**
  * Bind process exit handlers to clean up the hot file.
+ * @internal Exported for testing.
  */
-function bindExitHandlers(hotFile: string): void {
+export function bindExitHandlers(hotFile: string): void {
     if (exitHandlersBound) {
         return
     }

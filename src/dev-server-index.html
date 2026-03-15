@@ -1,62 +1,330 @@
 <!DOCTYPE html>
-<html>
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>ASP.NET Core Vite</title>
-        <style>
-            *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-            html { line-height: 1.5; font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; }
-            body { min-height: 100vh; display: flex; align-items: center; justify-content: center; background-color: #f3f4f6; color: #4b5563; }
-            @media (prefers-color-scheme: dark) { body { background-color: #111827; color: #9ca3af; } .card { background-color: #1f2937; } h1 { color: #f3f4f6; } a { color: #818cf8; } a:hover { color: #a5b4fc; } .divider { border-color: #374151; } code { color: #f3f4f6; } }
-            .card { background: white; padding: 2.5rem; border-radius: 0.5rem; box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1); max-width: 36rem; width: 100%; }
-            .logos { display: flex; align-items: center; justify-content: center; gap: 1.5rem; margin-bottom: 2rem; }
-            .logos svg { height: 4rem; width: auto; }
-            .plus { color: #9ca3af; font-size: 1.5rem; }
-            h1 { font-size: 1.125rem; font-weight: 600; color: #111827; margin-bottom: 0.5rem; }
-            p { margin-top: 0.75rem; }
-            .divider { border-top: 1px solid #e5e7eb; margin: 1.5rem 0; }
-            a { color: #6366f1; font-weight: 600; text-decoration: none; }
-            a:hover { color: #4f46e5; }
-            code { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace; font-size: 0.875rem; font-weight: 700; color: #111827; }
-        </style>
-    </head>
-    <body>
-        <div class="card">
-            <div class="logos">
-                <!-- .NET logo -->
-                <svg viewBox="0 0 456 456" xmlns="http://www.w3.org/2000/svg">
-                    <rect width="456" height="456" rx="50" fill="#512BD4"/>
-                    <path d="M81.274 291.333c-3.249 0-5.937-.968-8.064-2.904-2.08-1.984-3.12-4.408-3.12-7.272 0-2.912 1.04-5.36 3.12-7.344 2.127-1.984 4.815-2.976 8.064-2.976 3.296 0 5.984.992 8.064 2.976 2.127 1.984 3.192 4.432 3.192 7.344 0 2.864-1.065 5.288-3.192 7.272-2.08 1.936-4.768 2.904-8.064 2.904zM200.082 289.333h-28.704l-66.096-102.768c-2.56-3.888-4.672-7.824-6.336-11.808h-.48c.672 4.56 1.008 13.368 1.008 26.424v88.152h-23.088v-139.44h30.528l63.84 100.56c4.176 6.576 6.864 11.136 8.064 13.68h.336c-.864-5.568-1.296-14.832-1.296-27.792v-86.448h23.232v139.44h-.008zM288.786 289.333h-76.896v-139.44h73.92v20.784h-49.728v39.168h46.08v20.64h-46.08v38.064h52.704v20.784zM380.466 170.517h-39.168v118.8h-24.192v-118.8h-39.024v-20.64h102.384v20.64z" fill="white"/>
-                </svg>
-                <span class="plus">+</span>
-                <!-- Vite logo -->
-                <svg viewBox="0 0 410 404" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M399.641 59.5246L215.643 388.545C211.844 395.338 202.084 395.378 198.228 388.618L10.5817 59.5563C6.38087 52.1896 12.6802 43.2665 21.0281 44.7586L205.223 77.6824C206.398 77.8924 207.601 77.8904 208.776 77.6763L389.119 44.8058C397.439 43.2894 403.768 52.1434 399.641 59.5246Z" fill="url(#paint0_linear)"/>
-                    <path d="M292.965 1.5744L156.801 28.2552C154.563 28.6937 152.906 30.5903 152.771 32.8664L144.395 174.33C144.198 177.662 147.258 180.248 150.51 179.498L188.42 170.749C191.967 169.931 195.172 173.055 194.443 176.622L183.18 231.775C182.422 235.487 185.907 238.661 189.532 237.56L212.947 230.446C216.577 229.344 220.065 232.527 219.297 236.242L201.398 322.875C200.278 328.294 207.486 331.249 210.492 326.603L212.5 323.5L323.454 102.072C325.312 98.3645 322.108 94.137 318.036 94.9228L279.014 102.454C275.347 103.161 272.227 99.746 273.262 96.1583L298.731 7.86689C299.767 4.27314 296.636 0.855181 292.965 1.5744Z" fill="url(#paint1_linear)"/>
-                    <defs>
-                        <linearGradient id="paint0_linear" x1="6.00017" y1="32.9999" x2="235" y2="344" gradientUnits="userSpaceOnUse">
-                            <stop stop-color="#41D1FF"/>
-                            <stop offset="1" stop-color="#BD34FE"/>
-                        </linearGradient>
-                        <linearGradient id="paint1_linear" x1="194.651" y1="8.81818" x2="236.076" y2="292.989" gradientUnits="userSpaceOnUse">
-                            <stop stop-color="#FFEA83"/>
-                            <stop offset="0.0833333" stop-color="#FFDD35"/>
-                            <stop offset="1" stop-color="#FFA800"/>
-                        </linearGradient>
-                    </defs>
-                </svg>
+<html lang="en"><head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>Vite Dev Server | ASP.NET Core</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+    <style>
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+        :root {
+            --bg-deep: #05080f;
+            --accent: #c5a059;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --card-bg: rgba(255, 255, 255, 0.02);
+            --card-border: rgba(197, 160, 89, 0.15);
+            --green: #22c55e;
+        }
+
+        body {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            background-color: var(--bg-deep);
+            color: var(--text-main);
+            font-family: 'Inter', -apple-system, sans-serif;
+            -webkit-font-smoothing: antialiased;
+            background-image:
+                radial-gradient(circle at 50% -20%, rgba(197, 160, 89, 0.08) 0%, transparent 50%),
+                radial-gradient(circle at 0% 100%, rgba(197, 160, 89, 0.03) 0%, transparent 40%);
+        }
+
+        ::selection { background: var(--accent); color: black; }
+        a { color: inherit; text-decoration: none; }
+
+        /* Main layout */
+        main {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0 1.5rem 5rem;
+        }
+
+        .container { max-width: 42rem; width: 100%; }
+
+        /* Header */
+        .header { text-align: center; margin-bottom: 3rem; }
+
+        .status-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.25rem 0.75rem;
+            border-radius: 9999px;
+            border: 1px solid rgba(34, 197, 94, 0.2);
+            background: rgba(34, 197, 94, 0.05);
+            margin-bottom: 1.5rem;
+        }
+
+        .status-dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: var(--green);
+            box-shadow: 0 0 8px rgba(34, 197, 94, 0.4);
+        }
+
+        .status-text {
+            font-size: 10px;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--green);
+            font-weight: 700;
+        }
+
+        h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.25rem;
+            line-height: 1.15;
+            margin-bottom: 1rem;
+            text-shadow: 0 0 20px rgba(197, 160, 89, 0.2);
+        }
+
+        h1 .accent { font-style: italic; color: var(--accent); }
+
+        .subtitle {
+            color: var(--text-muted);
+            font-weight: 300;
+            letter-spacing: 0.025em;
+            max-width: 28rem;
+            margin: 0 auto;
+            font-size: 0.875rem;
+        }
+
+        /* Nav links */
+        .nav-links {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            margin-bottom: 3rem;
+        }
+
+        .nav-link {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 1.25rem;
+            width: 100%;
+            border-radius: 0.75rem;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            transition: all 0.2s ease;
+        }
+
+        .nav-link:hover {
+            background: rgba(197, 160, 89, 0.08);
+            border-color: var(--accent);
+        }
+
+        .nav-link-content { display: flex; align-items: center; gap: 1rem; }
+
+        .nav-icon {
+            width: 2.5rem;
+            height: 2.5rem;
+            border-radius: 0.5rem;
+            background: rgba(197, 160, 89, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--accent);
+            flex-shrink: 0;
+        }
+
+        .nav-title {
+            font-size: 0.875rem;
+            font-weight: 600;
+            letter-spacing: 0.025em;
+        }
+
+        .nav-subtitle {
+            font-size: 10px;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+
+        .nav-subtitle.mono { font-family: ui-monospace, 'SF Mono', monospace; }
+
+        .nav-chevron {
+            color: var(--text-muted);
+            transition: all 0.2s ease;
+        }
+
+        .nav-link:hover .nav-chevron {
+            color: var(--accent);
+            transform: translateX(4px);
+        }
+
+        /* Info cards */
+        .cards-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1rem;
+        }
+
+        .glass-card {
+            background: var(--card-bg);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--card-border);
+            padding: 1.25rem;
+            border-radius: 1rem;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .glass-card:hover {
+            border-color: rgba(197, 160, 89, 0.4);
+            background: rgba(255, 255, 255, 0.04);
+            transform: translateY(-2px);
+        }
+
+        .card-label {
+            font-size: 9px;
+            text-transform: uppercase;
+            letter-spacing: 0.2em;
+            color: var(--text-muted);
+            margin-bottom: 0.75rem;
+            font-weight: 700;
+        }
+
+        .card-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .card-value {
+            font-size: 0.75rem;
+            font-family: ui-monospace, 'SF Mono', monospace;
+            color: var(--accent);
+        }
+
+        .card-badge {
+            font-size: 10px;
+            background: rgba(255, 255, 255, 0.05);
+            padding: 0.125rem 0.5rem;
+            border-radius: 0.25rem;
+            color: var(--text-muted);
+        }
+
+        /* Footer */
+        footer {
+            padding: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            background: rgba(0, 0, 0, 0.2);
+        }
+
+        .footer-inner {
+            max-width: 80rem;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1.5rem;
+        }
+
+        .footer-label {
+            font-size: 9px;
+            text-transform: uppercase;
+            letter-spacing: 0.3em;
+            color: var(--text-muted);
+            margin-bottom: 0.25rem;
+        }
+
+        .footer-name {
+            font-size: 10px;
+            font-weight: 500;
+            letter-spacing: 0.05em;
+        }
+
+        .footer-icon {
+            color: var(--text-muted);
+            font-size: 1.25rem;
+            cursor: pointer;
+            transition: color 0.2s;
+        }
+
+        .footer-icon:hover { color: var(--accent); }
+
+        /* Responsive */
+        @media (min-width: 768px) {
+            h1 { font-size: 3.75rem; }
+            .cards-grid { grid-template-columns: 1fr 1fr; }
+            .footer-inner { flex-direction: row; justify-content: space-between; }
+        }
+    </style>
+</head>
+<body>
+<main>
+    <div class="container">
+        <div class="header">
+            <div class="status-badge">
+                <span class="status-dot"></span>
+                <span class="status-text">HMR Active</span>
             </div>
-            <div>
-                <p>This is the Vite development server providing Hot Module Replacement for your ASP.NET Core application.</p>
-                <p>To access your application, make sure your .NET server is running:</p>
-                <p style="margin-top: 1rem;"><code>dotnet run</code> or <code>dotnet watch</code></p>
+            <h1>
+                Vite is ready.<br/>
+                <span class="accent">.NET is listening.</span>
+            </h1>
+            <p class="subtitle">
+                This is the Vite dev server. Your ASP.NET Core application is running separately.
+            </p>
+        </div>
+        <div class="nav-links">
+            <a class="nav-link" href="{{ APP_URL }}">
+                <div class="nav-link-content">
+                    <div class="nav-icon">
+                        <span class="material-symbols-outlined">open_in_new</span>
+                    </div>
+                    <div>
+                        <p class="nav-title">Open Application</p>
+                        <p class="nav-subtitle mono">{{ APP_URL }}</p>
+                    </div>
+                </div>
+                <span class="material-symbols-outlined nav-chevron">chevron_right</span>
+            </a>
+            <a class="nav-link" href="https://github.com/DavidCCoimbra/aspnetcore-vite-plugin">
+                <div class="nav-link-content">
+                    <div class="nav-icon">
+                        <span class="material-symbols-outlined">description</span>
+                    </div>
+                    <div>
+                        <p class="nav-title">Documentation</p>
+                        <p class="nav-subtitle">Setup Guide &amp; Configuration</p>
+                    </div>
+                </div>
+                <span class="material-symbols-outlined nav-chevron">chevron_right</span>
+            </a>
+        </div>
+        <div class="cards-grid">
+            <div class="glass-card">
+                <p class="card-label">Vite Dev Server</p>
+                <div class="card-row">
+                    <span class="card-value">localhost:5173</span>
+                    <span class="card-badge">HMR</span>
+                </div>
             </div>
-            <div class="divider"></div>
-            <div>
-                <p>For setup instructions and documentation:</p>
-                <p><a href="https://github.com/DavidCCoimbra/aspnetcore-vite-plugin">aspnetcore-vite-plugin &rarr;</a></p>
+            <div class="glass-card">
+                <p class="card-label">.NET Application</p>
+                <div class="card-row">
+                    <span class="card-value">{{ APP_URL }}</span>
+                    <span class="card-badge">Kestrel</span>
+                </div>
             </div>
         </div>
-    </body>
-</html>
+    </div>
+</main>
+<footer>
+    <div class="footer-inner">
+        <div>
+            <div class="footer-label">Plugin</div>
+            <span class="footer-name">aspnetcore-vite-plugin</span>
+        </div>
+        <a href="https://github.com/DavidCCoimbra/aspnetcore-vite-plugin">
+            <span class="material-symbols-outlined footer-icon">terminal</span>
+        </a>
+    </div>
+</footer>
+</body></html>

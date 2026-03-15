@@ -70,7 +70,7 @@ describe('aspnetcore-vite-plugin', () => {
 
         const config = plugin.config({}, { command: 'build', mode: 'production' })
         expect(config.base).toBe('/other-build/')
-        expect(config.build.manifest).toBe('manifest.json')
+        expect(config.build.manifest).toBe(true)
         expect(config.build.outDir).toBe('other-public/other-build')
         expect(config.build.rollupOptions.input).toBe('resources/js/app.ts')
 
@@ -132,7 +132,7 @@ describe('aspnetcore-vite-plugin', () => {
         expect(config.build.manifest).toBe('my-custom-manifest.json')
     })
 
-    it('has a default manifest path', () => {
+    it('has a default manifest setting', () => {
         const plugin = dotnetVite({
             input: 'resources/js/app.js',
         })[0]
@@ -141,7 +141,7 @@ describe('aspnetcore-vite-plugin', () => {
 
         const config = plugin.config(userConfig, { command: 'build', mode: 'production' })
 
-        expect(config.build.manifest).toBe('manifest.json')
+        expect(config.build.manifest).toBe(true)
     })
 
     it('respects users base config option', () => {
@@ -164,7 +164,7 @@ describe('aspnetcore-vite-plugin', () => {
 
         const config = plugin.config({}, { command: 'build', mode: 'production' })
         expect(config.base).toBe('/build/')
-        expect(config.build.manifest).toBe('manifest.json')
+        expect(config.build.manifest).toBe(true)
         expect(config.build.outDir).toBe('wwwroot/build')
         expect(config.build.rollupOptions.input).toBe('resources/js/app.js')
 
@@ -172,6 +172,23 @@ describe('aspnetcore-vite-plugin', () => {
         expect(ssrConfig.base).toBe('/build/')
         expect(ssrConfig.build.manifest).toBe(false)
         expect(ssrConfig.build.outDir).toBe('dist/ssr')
+        expect(ssrConfig.build.rollupOptions.input).toBe('resources/js/ssr.js')
+    })
+
+    it('configures SSR build with correct defaults', () => {
+        const plugin = dotnetVite({
+            input: 'resources/js/app.js',
+            ssr: 'resources/js/ssr.js',
+        })[0]
+
+        const config = plugin.config({}, { command: 'build', mode: 'production' })
+        expect(config.build.manifest).toBe(true)
+        expect(config.build.ssrManifest).toBe(false)
+
+        const ssrConfig = plugin.config({ build: { ssr: true } }, { command: 'build', mode: 'production' })
+        expect(ssrConfig.build.outDir).toBe('dist/ssr')
+        expect(ssrConfig.build.manifest).toBe(false)
+        expect(ssrConfig.build.ssrManifest).toBe(true)
         expect(ssrConfig.build.rollupOptions.input).toBe('resources/js/ssr.js')
     })
 
